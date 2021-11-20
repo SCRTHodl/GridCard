@@ -22,15 +22,13 @@ public class ConnectionHelper : MonoBehaviour
         Controller.enabled = false;
     }
 
-    //private void Start()
-    //{
-    //    if (GameObject.FindObjectOfType<WebGlBridge>().IsConnected)
-    //    {
-    //        OnConnectedr();
-    //    }
-
-      
-    //}
+    private void Start()
+    {
+       if (GameObject.FindObjectOfType<WebGlBridge>().IsConnected)
+       {
+           OnConnectedr();
+       }      
+    }
 
     public void OnConnectedr()
     {

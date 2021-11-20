@@ -33,12 +33,10 @@ public class WebGlBridge : MonoBehaviour
 
     public void TriggerPoll()
     {
-        //Debug.Log(payload);
+        // Debug.Log(payload);
 
         PollData();
     }
-
-
 
     [System.Serializable]
     public class TokenList

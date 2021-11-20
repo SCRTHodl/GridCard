@@ -411,6 +411,7 @@ MonoBehaviour:
   txtStat2: {fileID: 9113321629460680769}
   txtStat3: {fileID: 9113321628855072062}
   txtStat4: {fileID: 9113321629884675121}
+  InactifCardBurn: {fileID: 4026364664922448300}
   cardToken: {fileID: 11400000, guid: 7dba9917ad0961646bfeb1d8e23dc0a5, type: 2}
 --- !u!1 &4026364664922448300
 GameObject:
@@ -429,7 +430,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &258538474991603141
 RectTransform:
   m_ObjectHideFlags: 0
@@ -446,8 +447,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.6106, y: 0.6233}
-  m_SizeDelta: {x: 67.2003, y: 109.5567}
+  m_AnchoredPosition: {x: 0.0000050068, y: -0.00000041351}
+  m_SizeDelta: {x: 58.5, y: 100.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4133376333280381734
 CanvasRenderer:
@@ -464,13 +465,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4026364664922448300}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.6117647}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -479,7 +480,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: f40baae08768ec740ae5b5d3ba071741, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

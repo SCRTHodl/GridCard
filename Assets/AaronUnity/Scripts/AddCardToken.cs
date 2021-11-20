@@ -39,6 +39,7 @@ public class AddCardToken : MonoBehaviour
     private int selectedindex = 0;
     private string selectionState;
 
+    private int randomUpgradeToken = 0;
 
     private List<GameObject> selectedBoth;
 
@@ -50,6 +51,7 @@ public class AddCardToken : MonoBehaviour
         selectionState = "selection_hero";
         selectedBoth = new List<GameObject>();
     }
+
     void Update()
     {
         if (selectedBoth.Count == 1)
@@ -62,7 +64,39 @@ public class AddCardToken : MonoBehaviour
             TopTitle.text = "Ready To Upgrade";
         }
 
+        if (selectionState.Equals("selection_to_burn"))
+        {
+            #region Change Fields Color
+
+
+            //Main Text
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(4).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(28).GetComponent<TextMeshProUGUI>()));
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(5).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(29).GetComponent<TextMeshProUGUI>()));
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(6).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(30).GetComponent<TextMeshProUGUI>()));
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(7).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(31).GetComponent<TextMeshProUGUI>()));
+
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(12).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(36).GetComponent<TextMeshProUGUI>()));
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(13).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(37).GetComponent<TextMeshProUGUI>()));
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(14).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(38).GetComponent<TextMeshProUGUI>()));
+            setColorOfFiled02(OddsBurnHolder_fieds.transform.GetChild(15).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(39).GetComponent<TextMeshProUGUI>()));
+
+            //Small Text
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(28).GetComponent<TextMeshProUGUI>());
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(29).GetComponent<TextMeshProUGUI>());
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(30).GetComponent<TextMeshProUGUI>());
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(31).GetComponent<TextMeshProUGUI>());
+
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(36).GetComponent<TextMeshProUGUI>());
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(37).GetComponent<TextMeshProUGUI>());
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(38).GetComponent<TextMeshProUGUI>());
+            setColorOfFiled01(OddsBurnHolder_fieds.transform.GetChild(39).GetComponent<TextMeshProUGUI>());
+
+
+            #endregion
+        }
+
     }
+
     public void addCardToken()
     {
         g = Instantiate(templateCard, CardsListUI);
@@ -85,11 +119,15 @@ public class AddCardToken : MonoBehaviour
             UpgradeHeroesHolder.SetActive(false);
             OptionButtonsHolder.SetActive(true);
         }
-        else if (selectionState.Equals("selection_to_burn"))
+        else if (selectionState.Equals("selection_to_burn") && selectedBoth.Count < 2)
         {
-            selectedBoth.Add(g);
+            selectedBoth.Add(InstantiatedTokens.instantiatedObjects[selectedindex]);
 
             InstantiatedTokens.instantiatedObjects[selectedindex].gameObject.transform.GetChild(0).GetComponent<Button>().interactable = false;
+
+            InstantiatedTokens.instantiatedObjects[selectedindex].gameObject.transform.GetChild(0).GetComponent<Button>().image.overrideSprite = overrideImage;
+
+            InstantiatedTokens.instantiatedObjects[selectedindex].gameObject.GetComponent<CardDisplay>().InactifCardBurn.SetActive(true);
 
         }
         #endregion
@@ -108,7 +146,6 @@ public class AddCardToken : MonoBehaviour
         statsHolder.transform.GetChild(1).GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = InstantiatedTokens.instantiatedObjects[index].gameObject.GetComponent<CardDisplay>().txtStat4.text;
 
         statsHolder.transform.GetChild(1).GetChild(4).GetComponentInChildren<TextMeshProUGUI>().text = InstantiatedTokens.instantiatedObjects[index].gameObject.GetComponent<CardDisplay>().txtName.text;
-
         #endregion
 
     }
@@ -123,8 +160,6 @@ public class AddCardToken : MonoBehaviour
         OptionButtonsHolder.SetActive(false);
         UpgradeHeroesHolder.SetActive(true);
 
-        InstantiatedTokens.instantiatedObjects[selectedindex].gameObject.transform.GetChild(0).GetComponent<Button>().image.overrideSprite = overrideImage;
-
         InstantiatedTokens.instantiatedObjects[selectedindex].gameObject.transform.GetChild(0).GetComponent<Button>().interactable = false;
     }
 
@@ -135,6 +170,8 @@ public class AddCardToken : MonoBehaviour
 
     public void onOpenOddBurnPanel()
     {
+        if (selectedBoth.Count == 0) return;
+
         OddsBurnHolder.SetActive(true);
 
         #region Fill Selected Main Card
@@ -190,11 +227,6 @@ public class AddCardToken : MonoBehaviour
 
 
         #region Fill Extra Small Green 33% Burned Card
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(28).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, 4));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(29).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, 4));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(30).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, 4));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(31).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, 4));
-
         setSignOfFiled(OddsBurnHolder_fieds.transform.GetChild(28).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, 4));
         setSignOfFiled(OddsBurnHolder_fieds.transform.GetChild(29).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, 4));
         setSignOfFiled(OddsBurnHolder_fieds.transform.GetChild(30).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, 4));
@@ -204,10 +236,6 @@ public class AddCardToken : MonoBehaviour
         updateOldField(OddsBurnHolder_fieds.transform.GetChild(5).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(29).GetComponent<TextMeshProUGUI>().text));
         updateOldField(OddsBurnHolder_fieds.transform.GetChild(6).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(30).GetComponent<TextMeshProUGUI>().text)); updateOldField(OddsBurnHolder_fieds.transform.GetChild(7).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(31).GetComponent<TextMeshProUGUI>().text));
 
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(4).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(28).GetComponent<TextMeshProUGUI>().text));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(5).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(29).GetComponent<TextMeshProUGUI>().text));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(6).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(30).GetComponent<TextMeshProUGUI>().text));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(7).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(31).GetComponent<TextMeshProUGUI>().text));
 
         #endregion
 
@@ -220,11 +248,6 @@ public class AddCardToken : MonoBehaviour
 
         #region Fill Extra Small Red 33% Burned Card
 
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(36).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, -4));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(37).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, -4));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(38).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, -4));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(39).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, -4));
-
         setSignOfFiled(OddsBurnHolder_fieds.transform.GetChild(36).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, -4));
         setSignOfFiled(OddsBurnHolder_fieds.transform.GetChild(37).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, -4));
         setSignOfFiled(OddsBurnHolder_fieds.transform.GetChild(38).GetComponent<TextMeshProUGUI>(), UnityEngine.Random.Range(0, -4));
@@ -233,11 +256,6 @@ public class AddCardToken : MonoBehaviour
         updateOldField(OddsBurnHolder_fieds.transform.GetChild(12).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(36).GetComponent<TextMeshProUGUI>().text));
         updateOldField(OddsBurnHolder_fieds.transform.GetChild(13).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(37).GetComponent<TextMeshProUGUI>().text));
         updateOldField(OddsBurnHolder_fieds.transform.GetChild(14).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(38).GetComponent<TextMeshProUGUI>().text)); updateOldField(OddsBurnHolder_fieds.transform.GetChild(15).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(39).GetComponent<TextMeshProUGUI>().text));
-
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(12).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(36).GetComponent<TextMeshProUGUI>().text));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(13).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(37).GetComponent<TextMeshProUGUI>().text));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(14).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(38).GetComponent<TextMeshProUGUI>().text));
-        setColorOfFiled(OddsBurnHolder_fieds.transform.GetChild(15).GetComponent<TextMeshProUGUI>(), Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(39).GetComponent<TextMeshProUGUI>().text));
 
 
         #endregion
@@ -254,8 +272,22 @@ public class AddCardToken : MonoBehaviour
         Debug.Log("selected index: " + index);
     }
 
-
     private void setColorOfFiled(TextMeshProUGUI entity, int value)
+    {
+        // if (value > 0) entity.color = new Color(0, 1, 0);
+        // else if (value < 0) entity.color = new Color(1, 0, 0);
+        // else entity.color = new Color(1, 1, 1);
+    }
+
+    private void setColorOfFiled01(TextMeshProUGUI entity)
+    {
+        int value = Convert.ToInt16(entity.text);
+        if (value > 0) entity.color = new Color(0, 1, 0);
+        else if (value < 0) entity.color = new Color(1, 0, 0);
+        else entity.color = new Color(1, 1, 1);
+    }
+
+    private void setColorOfFiled02(TextMeshProUGUI entity, int value)
     {
         if (value > 0) entity.color = new Color(0, 1, 0);
         else if (value < 0) entity.color = new Color(1, 0, 0);
@@ -274,6 +306,71 @@ public class AddCardToken : MonoBehaviour
         entity.text = (Convert.ToInt16(entity.text) + value).ToString();
     }
 
+
+    public void upgradeNow()
+    {
+        OddsBurnHolder.SetActive(false);
+
+        imageHolder.SetActive(false);
+        statsHolder.SetActive(true);
+        btnCancel.SetActive(false);
+        UpgradeHeroesHolder.SetActive(false);
+        OptionButtonsHolder.SetActive(false);
+
+        selectedBoth.Clear();
+        selectionState = "selection_hero";
+        TopTitle.text = "Choose Heroe";
+
+
+        for (int i = 0; i < InstantiatedTokens.instantiatedObjects.Count; i++)
+        {
+            InstantiatedTokens.instantiatedObjects[i].gameObject.transform.GetChild(0).GetComponent<Button>().interactable = true;
+
+            InstantiatedTokens.instantiatedObjects[i].gameObject.GetComponent<CardDisplay>().InactifCardBurn.SetActive(false);
+        }
+
+        randomUpgradeToken = UnityEngine.Random.Range(0, 3);
+
+        Debug.Log(randomUpgradeToken);
+
+        #region Get new Values
+
+        if (randomUpgradeToken == 0)
+        {
+            InstantiatedTokens.cardWeapons = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardEngineering = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardBiotech = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardPsychics = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(7).GetComponent<TextMeshProUGUI>().text);
+        }
+        else if (randomUpgradeToken == 1)
+        {
+            InstantiatedTokens.cardWeapons = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(8).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardEngineering = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(9).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardBiotech = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(10).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardPsychics = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(11).GetComponent<TextMeshProUGUI>().text);
+        }
+        else if (randomUpgradeToken == 2)
+        {
+            InstantiatedTokens.cardWeapons = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(12).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardEngineering = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(13).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardBiotech = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(14).GetComponent<TextMeshProUGUI>().text);
+            InstantiatedTokens.cardPsychics = Convert.ToInt16(OddsBurnHolder_fieds.transform.GetChild(15).GetComponent<TextMeshProUGUI>().text);
+        }
+
+        #endregion
+
+        #region update selected card
+
+        statsHolder.transform.GetChild(1).GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = InstantiatedTokens.cardWeapons.ToString();
+
+        statsHolder.transform.GetChild(1).GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = InstantiatedTokens.cardEngineering.ToString();
+
+        statsHolder.transform.GetChild(1).GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = InstantiatedTokens.cardBiotech.ToString();
+
+        statsHolder.transform.GetChild(1).GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = InstantiatedTokens.cardPsychics.ToString();
+
+        #endregion
+    }
 
 
 }
