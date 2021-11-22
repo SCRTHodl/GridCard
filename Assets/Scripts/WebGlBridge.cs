@@ -34,8 +34,7 @@ public class WebGlBridge : MonoBehaviour
     public void TriggerPoll()
     {
         // Debug.Log(payload);
-
-        PollData();
+        // PollData();
     }
 
     [System.Serializable]
@@ -103,6 +102,7 @@ public class WebGlBridge : MonoBehaviour
     {
         Connect();
     }
+
     [ContextMenu("Test ReportBattleState")]
     public void TestReportBattleState()
     {
@@ -114,6 +114,7 @@ public class WebGlBridge : MonoBehaviour
     {
         ReportBattleStatus("{\"heroes_waiting\": 1, \"your_hero\": null}");
     }
+
     [ContextMenu("Test ReportBattleState2222222")]
     public void TestReportBattleStateZEor2()
     {
